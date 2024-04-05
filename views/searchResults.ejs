@@ -5,8 +5,14 @@
         <h1>Search Results</h1>
         <ul>
           <% results.forEach(result => { %>
-            <li><%= result %></li>
+            <li>
+              <p>Procedure Code: <%= result.procedure_code %></p>
+              <p>Procedure Description: <%= result.procedure_description %></p>
+              <p>Beneficiary ID: <%= result.beneficiary_id %></p>
+            </li>
           <% }); %>
         </ul>
       </body>
       <%- include('./partials/foot.ejs') %>
+</html>
+
