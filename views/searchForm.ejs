@@ -4,16 +4,18 @@
 <body>
     <%- include('./partials/nav.ejs') %>
   <h1>Search Page</h1>
-  <form action="/search" method="POST">
+  <form action="/search/results" method="POST">
     <label for="searchTerm">Search Term:</label>
     <input type="text" name="searchTerm" id="searchTerm" placeholder="Enter your search term">
     <label for="database">Select Database:</label>
     <select name="database" id="database">
       <option value="postgres">PostgreSQL</option>
       <option value="mongo">MongoDB</option>
+      <option value="both">Both</option>
     </select>
     <button type="submit">Search</button>
   </form>
 </body>
 <%- include('./partials/foot.ejs') %>
 </html>
+
