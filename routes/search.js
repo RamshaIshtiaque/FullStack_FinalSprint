@@ -3,7 +3,8 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const postgresClient = require('../services/pdb.js');
 const { client: mongoClient, connectToMongoDB } = require('../services/mdb.js');
-
+const fs = require('fs');
+const path = require('path');
 router.use(bodyParser.urlencoded({ extended: true }));
 
 // Route for rendering the search form
@@ -11,8 +12,30 @@ router.get('/', (req, res) => {
     res.render('searchForm'); // Assuming you have a view named searchForm.ejs
 });
 
+const logSearchAction = (req, res, next) => {
+    const logFolderPath = path.join(__dirname, '..', 'logs'); // Up one level to the root directory, then into the logs folder
+    const logFilePath = path.join(logFolderPath, 'events.log');
+    const userId = req.session.user || 'anonymous';
+    const searchTerm = req.body.searchTerm || 'N/A'; // Get the search term from the request body or set to 'N/A' if not provided
+    const logData = `${new Date().toISOString()} - Search action by user ${userId}: ${req.method} ${req.originalUrl} - Search term: ${searchTerm}\n`;
+
+    // Check if the logs folder exists, if not, create it
+    if (!fs.existsSync(logFolderPath)) {
+        fs.mkdirSync(logFolderPath);
+    }
+
+    // Append log data to the log file
+    fs.appendFile(logFilePath, logData, (err) => {
+        if (err) {
+            console.error('Error writing to log file:', err);
+        }
+    });
+
+    next(); // Proceed to the next middleware or route handler
+};
+
 // Route for handling form submission
-router.post('/results', async (req, res) => {
+router.post('/results', logSearchAction, async (req, res) => {
     const searchQuery = req.body.searchTerm;
     const selectedDatabase = req.body.database; // Assuming you have a select input with name "database"
     console.log(searchQuery);

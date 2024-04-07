@@ -3,6 +3,7 @@ create table medical_procedures (
 	procedure_description TEXT,
 	beneficiary_id VARCHAR(50)
 );
+
 insert into medical_procedures (procedure_code, procedure_description, beneficiary_id) values ('04NA3ZZ', 'Release Left Renal Artery, Percutaneous Approach', '9T53F61TE97');
 insert into medical_procedures (procedure_code, procedure_description, beneficiary_id) values ('0F1D4DC', 'Bypass Pancreat Duct to Lg Int w Intralum Dev, Perc Endo', '5AE1PM8NU53');
 insert into medical_procedures (procedure_code, procedure_description, beneficiary_id) values ('0474056', 'Dilate Splenic Art, Bifurc, w 2 Drug-elut, Open', '6KG8YY5HE65');
@@ -103,3 +104,10 @@ insert into medical_procedures (procedure_code, procedure_description, beneficia
 insert into medical_procedures (procedure_code, procedure_description, beneficiary_id) values ('07PN0CZ', 'Removal of Extraluminal Device from Lymphatic, Open Approach', '7J14HT9WM49');
 insert into medical_procedures (procedure_code, procedure_description, beneficiary_id) values ('0SHC05Z', 'Insertion of Ext Fix into R Knee Jt, Open Approach', '4NQ6YT3RW55');
 insert into medical_procedures (procedure_code, procedure_description, beneficiary_id) values ('0PWV0KZ', 'Revision of Nonaut Sub in L Finger Phalanx, Open Approach', '8QG6DM0YG10');
+
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
